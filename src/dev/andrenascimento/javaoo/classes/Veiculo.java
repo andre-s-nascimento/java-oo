@@ -1,6 +1,11 @@
 package dev.andrenascimento.javaoo.classes;
 
-public class Veiculo {
+import dev.andrenascimento.javaoo.excecoes.AbastecimentoVeiculoLigadoException;
+import dev.andrenascimento.javaoo.excecoes.AceleracaoVeiculoDesligadoException;
+import dev.andrenascimento.javaoo.excecoes.ChassiInvalidoException;
+import dev.andrenascimento.javaoo.excecoes.FrenagemVeiculoDesligadoException;
+
+public abstract class Veiculo {
 
     private String nome;
 
@@ -8,9 +13,18 @@ public class Veiculo {
 
     private String chassi;
 
-    private int quantidadeRodas;
+    protected int quantidadeRodas;
 
     private float quantidadeCombustivel;
+
+    private Boolean ligado;
+
+    protected float velocidade;
+
+    public Veiculo() {
+        this.ligado = false;
+        this.velocidade = 0;
+    }
 
     public String getNome() {
         return nome;
@@ -32,38 +46,79 @@ public class Veiculo {
         return chassi;
     }
 
-    public void setChassi(String chassi) throws Exception {
+    public void setChassi(String chassi) throws ChassiInvalidoException {
         if (chassi.length() == 5) {
             this.chassi = chassi;
         } else {
-            throw new Exception("O chassi informado é invalido");
+            throw new ChassiInvalidoException(chassi);
         }
-        
     }
 
     public int getQuantidadeRodas() {
         return quantidadeRodas;
     }
 
+
     public void setQuantidadeRodas(int quantidadeRodas) {
         this.quantidadeRodas = quantidadeRodas;
+    }
+
+    public void setQuantidadeCombustivel(float quantidadeCombustivel) {
+        this.quantidadeCombustivel = quantidadeCombustivel;
     }
 
     public float getQuantidadeCombustivel() {
         return quantidadeCombustivel;
     }
 
-    public void ligar() {
+    public Boolean isLigado() {
+        return ligado;
+    }
+
+    public float getVelocidade() {
+        return velocidade;
+    }
+
+    public final void ligar() {
+        this.ligado = true;
+        this.velocidade = 0;
         System.out.println("O veículo ligou!");
     }
 
-    public void deligar() {
+    public final void deligar() {
+        this.ligado = false;
+        this.velocidade = 0;
         System.out.println("O veículo desligou!");
     }
 
-    public float abastecer(float litros) {
-        quantidadeCombustivel += litros;
+    public float abastecer(float litros) throws AbastecimentoVeiculoLigadoException {
+        if (!this.ligado) {
+            quantidadeCombustivel += litros;
+
+        } else {
+            throw new AbastecimentoVeiculoLigadoException();
+        }
         return quantidadeCombustivel;
     }
+
+    public void acelerar() throws AceleracaoVeiculoDesligadoException{
+
+        if(this.ligado){
+            this.velocidade += 10;
+        } else {
+            throw new AceleracaoVeiculoDesligadoException();
+        }
+
+    }
+
+    public void frear() throws FrenagemVeiculoDesligadoException{
+        if(this.ligado){
+            this.velocidade -= 10;
+        } else {
+            throw new FrenagemVeiculoDesligadoException();
+        }
+    }
+
+    public abstract void preparar();
 
 }
