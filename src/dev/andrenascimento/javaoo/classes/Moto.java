@@ -4,7 +4,7 @@ import dev.andrenascimento.javaoo.excecoes.AceleracaoVeiculoDesligadoException;
 
 import dev.andrenascimento.javaoo.excecoes.FrenagemVeiculoDesligadoException;
 
-public final class Moto extends Veiculo {
+public final class Moto extends VeiculoBase {
     public Moto() {
         this.quantidadeRodas = 2;
     }

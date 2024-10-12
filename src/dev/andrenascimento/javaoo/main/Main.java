@@ -1,15 +1,14 @@
 package dev.andrenascimento.javaoo.main;
 
 import dev.andrenascimento.javaoo.classes.Carro;
-import dev.andrenascimento.javaoo.classes.Moto;
-import dev.andrenascimento.javaoo.classes.Veiculo;
+import dev.andrenascimento.javaoo.classes.VeiculoBase;
 import dev.andrenascimento.javaoo.excecoes.AbastecimentoVeiculoLigadoException;
 import dev.andrenascimento.javaoo.excecoes.ChassiInvalidoException;
 
 public class Main {
     public static void main(String[] args) {
         try {
-            Veiculo corsa = new Carro("Corsa", "GM");
+            VeiculoBase corsa = new Carro("Corsa", "GM"); //Polimorfismo
             corsa.setChassi("ABCDE");
             corsa.abastecer(10);
             //((Carro) corsa).setQuantidadePortas(4);

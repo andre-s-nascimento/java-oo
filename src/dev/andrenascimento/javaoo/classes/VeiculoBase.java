@@ -4,8 +4,11 @@ import dev.andrenascimento.javaoo.excecoes.AbastecimentoVeiculoLigadoException;
 import dev.andrenascimento.javaoo.excecoes.AceleracaoVeiculoDesligadoException;
 import dev.andrenascimento.javaoo.excecoes.ChassiInvalidoException;
 import dev.andrenascimento.javaoo.excecoes.FrenagemVeiculoDesligadoException;
+import dev.andrenascimento.javaoo.interfaces.Andador;
+import dev.andrenascimento.javaoo.interfaces.Ligador;
+import dev.andrenascimento.javaoo.interfaces.Veiculo;
 
-public abstract class Veiculo {
+public abstract class VeiculoBase implements Veiculo, Andador, Ligador{
 
     private String nome;
 
@@ -21,7 +24,7 @@ public abstract class Veiculo {
 
     protected float velocidade;
 
-    public Veiculo() {
+    public VeiculoBase() {
         this.ligado = false;
         this.velocidade = 0;
     }
@@ -85,20 +88,19 @@ public abstract class Veiculo {
         System.out.println("O veículo ligou!");
     }
 
-    public final void deligar() {
+    public final void desligar() {
         this.ligado = false;
         this.velocidade = 0;
         System.out.println("O veículo desligou!");
     }
 
-    public float abastecer(float litros) throws AbastecimentoVeiculoLigadoException {
+    public void abastecer(float litros) throws AbastecimentoVeiculoLigadoException {
         if (!this.ligado) {
             quantidadeCombustivel += litros;
 
         } else {
             throw new AbastecimentoVeiculoLigadoException();
         }
-        return quantidadeCombustivel;
     }
 
     public void acelerar() throws AceleracaoVeiculoDesligadoException{
